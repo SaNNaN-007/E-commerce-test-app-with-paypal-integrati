@@ -1,71 +1,87 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
+export default function Login() {
 
-function Login() {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
+    const [formData,setFormData]=useState({})
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]:e.target.value
+        })
+    }
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      console.log(formData)
+      login();
+    }
 
-  async function login() {
-    let user = {email,password};
-    let result = await fetch("http://localhost:3000/api/login",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "Accept":"application/json"
-      },
-      body:JSON.stringify(user)
-  })
-  result = await result.json(); 
-  console.log(result)
-  localStorage.setItem("user-info",JSON.stringify(result))
-  navigate("/shop")
-}
+
+    const navigate = useNavigate();
+
+    async function login() {
+      
+      let result = await fetch("http://localhost:3000/api/login",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            "Accept":"application/json"
+        },
+        body:JSON.stringify(formData)
+    })
+    // .catch(error => { console.log(error.message)});
+  
+    result = await result.json(); 
+    console.log(result)
+    localStorage.setItem("user-info",JSON.stringify(result))
+    navigate("/shop") 
+    
+  }
 
 
 
 
   return (
-    <div className='container'>
-      <div className='container'>
-        <hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
-        <hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
-        
-          <h1>Login</h1>
 
-        <div className='col-sm-6 offset-sm-3'>
+    <div className="login-box">
+      <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
           
-          <input 
-          type="text" 
-          placeholder='Email' 
-          className='form-control'
-          onChange={(e) => setEmail(e.target.value)}  
-          required
-          />
-
-          <br/>
-
-          <input 
-          type="password" 
-          placeholder='Password' 
-          className='form-control'
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          />
-
-          <br/>
-
-          <button className='btn btn-primary' type="submit" onClick={login}>Login</button>
-
-      </div>
-    </div>
-  </div>
-)}
-export default Login
+          <div className="user-box">
+            <input 
+            type="email"
+            name="email" 
+            onChange={handleChange}
+            required
+            />
+            <label>Email</label>
+          </div>
+          
+          
+          <div className="user-box">
+            <input 
+            type="password" 
+            name="password" 
+            onChange={handleChange}
+            required
+            />
+            <label>Password</label>
+          </div>
 
 
+          <a>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <button type='submit' className='btn'>Submit</button>
+          </a>
+        </form>
+</div>
+    
+  )
+}
 
 

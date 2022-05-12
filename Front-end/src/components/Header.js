@@ -14,30 +14,49 @@ export default function Header(props) {
 
   return (
     <>
-      <div className='block-header row logo'>
-       <p>Shopping Cart</p>
-      </div>
 
-       <div className='block-header row'>
-       <Link to="#">
-          <strong> <button className='btn'> Cart </button> </strong>{' '}
-          {props.countCartItems ? (
-            <button className="badge">{props.countCartItems}</button>
-          ) : (
-            ' '
-          )}  
-        
-        </Link>
-        <hr />
-        
-        {
-          user ?
-          <h1 className='center '> {user && user.email} <button className='btn' onClick={logout}> Log out </button></h1>
-          :
-          <Link to="/"><button className='btn btn-large'> Log In </button></Link>
-        }
-      </div>
+<nav className='nav-color'>
+    <div className="nav-wrapper">
+    <div className='pad'>
+      <Link to="/shop" className="brand-logo">Shopping App</Link>
+      <ul id="nav-mobile" className="right hide-on-med-and-down">
 
+        <li className='paddd'>
+        <button className='btn '>
+          <Link to="#">
+            <strong className='center'> Cart </strong>{' '}
+            {props.countCartItems ? (
+              <button className="badge">{props.countCartItems}</button>
+            ) : (
+              ' '
+            )}  
+          
+          </Link>
+          </button>
+        </li>
+
+        <li>
+          {
+            user ?
+            <>
+            <ul>
+              <li><h2 className='center padd'> {user && user.email}</h2></li>
+              <li><button className='btn' onClick={logout}> Log Out </button></li>
+              </ul>
+            </>
+            :
+            <Link to="/" className='btn'> Log In </Link>
+          }
+        </li>
+        
+
+      </ul>
+      </div>
+    </div>
+    
+  </nav>
+  <hr />
+      
       </>
   );
 }

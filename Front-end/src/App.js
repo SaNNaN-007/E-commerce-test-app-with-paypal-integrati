@@ -55,7 +55,7 @@ console.log(datas)
     }
   };
   return (
-    <div className="App">
+    <div className="App container">
       <Header countCartItems={cartItems.length}></Header>
       <div className="row">
         
